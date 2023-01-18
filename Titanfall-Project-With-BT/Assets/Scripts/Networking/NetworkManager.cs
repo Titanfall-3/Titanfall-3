@@ -2,9 +2,9 @@ using Fusion;
 using Fusion.Sockets;
 using System;
 using System.Collections.Generic;
+using Fusion.Photon.Realtime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Utilities;
 
 public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 {
@@ -30,12 +30,33 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
         Runner = gameObject.AddComponent<NetworkRunner>();
         Runner.ProvideInput = true;
 
+        Dictionary<string, object> values = new Dictionary<string, object>();
+
+        values.Add("username", PlayerPrefs.GetString("username"));
+        values.Add("password", PlayerPrefs.GetString("password"));
+        values.Add("version", Application.version);
+
+        if (PlayerPrefs.GetInt("remember") == 0)
+        {
+            PlayerPrefs.DeleteKey("username");
+            PlayerPrefs.DeleteKey("password");
+            PlayerPrefs.Save();
+        }
+        
+        // Create a new AuthenticationValues
+        AuthenticationValues authentication = new AuthenticationValues();
+
+        // Setup
+        authentication.AuthType = CustomAuthenticationType.Custom;
+        authentication.SetAuthPostData(values);
+
         await Runner.StartGame(new StartGameArgs()
         {
             GameMode = gameMode,
             SessionName = "WeBallin",
             Scene = SceneManager.GetActiveScene().buildIndex,
             SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>(),
+            AuthValues = authentication,
         });
         
         InputProviderGameObject.SetActive(true);

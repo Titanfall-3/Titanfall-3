@@ -10,7 +10,9 @@ public class VanguardCamera : NetworkBehaviour
     public float minX = -60f;
     public float maxX = 60f;
  
-    public float sensitivity;
+    [Networked]
+    public float sensitivity { get; set; }
+    public GameObject cameraGameObject;
     public Camera cam;
  
     float rotY = 0f;
@@ -49,8 +51,9 @@ public class VanguardCamera : NetworkBehaviour
     {
         if (!HasInputAuthority)
         {
+            cameraGameObject = cam.gameObject;
             cam.enabled = false;
-            if (cam.gameObject.TryGetComponent(out AudioListener audioListener))
+            if (cameraGameObject.TryGetComponent(out AudioListener audioListener))
             {
                 audioListener.enabled = false;
             }
@@ -59,6 +62,9 @@ public class VanguardCamera : NetworkBehaviour
 
     void Update()
     {
+        if (!HasStateAuthority)
+            return;
+        
         if (enterScript.inTitan)
         {
             rotY += look.x;
@@ -67,7 +73,7 @@ public class VanguardCamera : NetworkBehaviour
             rotX = Mathf.Clamp(rotX, minX, maxX);
    
             transform.localEulerAngles = new Vector3(0, rotY, 0);
-            cam.transform.localEulerAngles = new Vector3(-rotX, 0, 0);
+            cameraGameObject.transform.localEulerAngles = new Vector3(-rotX, 0, 0);
            
             yaw -= Input.GetAxisRaw("Mouse Y") * 0.1f;
             yaw = Mathf.Clamp(yaw, -1f, 1f);
@@ -84,7 +90,8 @@ public class VanguardCamera : NetworkBehaviour
         if (moveScript.isMoving && !moveScript.isDashing)
         {
             timer += Time.deltaTime * (moveScript.isSprinting ? sprintBobSpeed : moveScript.isWalking ?  walkBobSpeed : runBobSpeed);
-            cam.transform.localPosition = new Vector3(cam.transform.localPosition.x, defaultY + Mathf.Sin(timer) * (moveScript.isSprinting ? sprintBobAmount : moveScript.isWalking ? walkBobAmount : runBobAmount), cam.transform.localPosition.z);
+            Transform camTransform = cameraGameObject.transform;
+            camTransform.localPosition = new Vector3(camTransform.localPosition.x, defaultY + Mathf.Sin(timer) * (moveScript.isSprinting ? sprintBobAmount : moveScript.isWalking ? walkBobAmount : runBobAmount), camTransform.localPosition.z);
         }
     }
 

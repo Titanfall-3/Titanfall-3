@@ -6168,7 +6168,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6226181833938332166
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -6185,7 +6185,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!114 &1310463187594430575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9334,7 +9334,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 1000
-  field of view: 60
+  field of view: 90
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -9436,8 +9436,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  _TitanObject: {fileID: 0}
-  _TitanScript: {fileID: 0}
+  TitanObject: {fileID: 0}
+  TitanScript: {fileID: 0}
   _vanguardTitanPrefab:
     RawGuidValue: cf462d6715c994f4d848251fb0993fa2
 --- !u!114 &2366165501117250643
@@ -9454,12 +9454,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectInterest: 1
   DefaultInterestGroups: []
-  DestroyWhenStateAuthorityLeaves: 0
-  AllowStateAuthorityOverride: 1
+  DestroyWhenStateAuthorityLeaves: 1
+  AllowStateAuthorityOverride: 0
   AoiPositionSource: {fileID: 0}
   Flags: 2305
   NetworkGuid:
-    RawGuidValue: 39499910ecec3b349aad9ced288f23a0
+    RawGuidValue: 14181e69731047e47bac39fedc8f8116
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 3771577491933068419}
@@ -9485,8 +9485,9 @@ MonoBehaviour:
   _interpolationDataSource: 0
   minX: -60
   maxX: 60
-  sensitivity: 0.3
+  _sensitivity: 0.3
   cam: {fileID: 8685051920708573616}
+  cameraGameObject: {fileID: 0}
   look: {x: 0, y: 0}
   sprintBobSpeed: 19
   runBobSpeed: 13

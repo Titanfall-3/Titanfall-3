@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GunScript : MonoBehaviour
 {
@@ -23,34 +25,32 @@ public class GunScript : MonoBehaviour
     WeaponSwitching weaponSwitching;
 
     string publicMuzzle = "Muzzle";
+    
+    private void Awake()
+    {
+        inputHandling = GetComponentInParent<PlayerInputHandling>();
+        cam = GetComponentInParent<Camera>();
+        weaponSwitching = GetComponentInParent<WeaponSwitching>();
+        recoil = GetComponentInParent<Recoil>();
 
-    bool firstSwitch = true;
+        playerMain = transform.root;
+        gunValues.ammoLeft = gunValues.magSize;
+        
+        publicMuzzlePoint = GameObject.Find(gunValues.name + publicMuzzle);
+        
+        //Debug.Log(gunValues.name + publicMuzzle);
+        GameObject flash = Instantiate(gunValues.muzzleFlash, muzzlePoint.transform) as GameObject;
+        flash.layer = muzzlePoint.layer;
+        
+        GameObject flash2 = Instantiate(gunValues.muzzleFlash, publicMuzzlePoint.transform) as GameObject;
+        flash2.layer = publicMuzzlePoint.layer;
+        
+        Switch();
+    }
 
-    // need to happen before switch, dont know how
     public void Switch()
     {
-        if (firstSwitch)
-        {
-            inputHandling = GetComponentInParent<PlayerInputHandling>();
-            cam = GetComponentInParent<Camera>();
-            weaponSwitching = GetComponentInParent<WeaponSwitching>();
-            recoil = GetComponentInParent<Recoil>();
-
-            playerMain = transform.root;
-            gunValues.ammoLeft = gunValues.magSize;
-            publicMuzzlePoint = GameObject.Find(gunValues.name + publicMuzzle);
-            //Debug.Log(gunValues.name + publicMuzzle);
-
-            GameObject flash = Instantiate(gunValues.muzzleFlash, muzzlePoint.transform) as GameObject;
-            flash.layer = muzzlePoint.layer;
-            GameObject flash2 = Instantiate(gunValues.muzzleFlash, publicMuzzlePoint.transform) as GameObject;
-            flash2.layer = publicMuzzlePoint.layer;
-            firstSwitch = false;
-
-            SetWeapon();
-        }
-        else
-            SetWeapon();
+        SetWeapon();
     }
 
     public void SetWeapon()

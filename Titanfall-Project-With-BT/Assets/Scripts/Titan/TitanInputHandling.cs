@@ -18,11 +18,10 @@ public class TitanInputHandling : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        if (GetInput<NetworkPlayerInput>(out var input) == false)
-        {
-            Debug.Log("No Input!");
+        if (!HasStateAuthority)
             return;
-        }
+        
+        if (GetInput<NetworkPlayerInput>(out var input) == false) return;
 
         var pressed = input.Buttons.GetPressed(ButtonsPrevious);
         

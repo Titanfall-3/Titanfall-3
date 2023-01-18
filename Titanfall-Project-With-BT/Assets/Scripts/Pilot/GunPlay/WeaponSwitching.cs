@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Fusion;
@@ -28,22 +29,27 @@ public class WeaponSwitching : NetworkBehaviour
     public string[] weaponTypes = new string[] { "Primary", "Secondary", "AntiTitan" };
     public bool[] isActive = new bool[] { false, false, false };
 
-    private void Start()
+    private void Awake()
     {
         inputHandling = GetComponentInParent<PlayerInputHandling>();
-        Instantiate(primary, transform);
-        Instantiate(secondary, transform);
-        Instantiate(antiTitan, transform);
-
+        
         Instantiate(publicPrimary, publicWeaponSwitcher.transform);
         Instantiate(publicSecondary, publicWeaponSwitcher.transform);
         Instantiate(publicAntiTitan, publicWeaponSwitcher.transform);
+        
+        Instantiate(primary, transform);
+        Instantiate(secondary, transform);
+        Instantiate(antiTitan, transform);
 
         if (!HasInputAuthority)
         {
             LayerUtility.ReplaceLayerRecursively(publicWeaponSwitcher.transform,8, 12);
             LayerUtility.ReplaceLayerRecursively(transform,11, 8);
         }
+    }
+
+    private void Start()
+    {
 
         Select();
     }

@@ -20,6 +20,8 @@ public class PlayerInputHandling : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
+        if (!HasStateAuthority) return;
+        
         if (GetInput<NetworkPlayerInput>(out var input) == false) return;
 
         var pressed = input.Buttons.GetPressed(ButtonsPrevious);

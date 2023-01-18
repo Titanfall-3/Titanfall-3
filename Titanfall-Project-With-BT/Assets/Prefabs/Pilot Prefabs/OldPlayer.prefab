@@ -471,8 +471,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  _TitanObject: {fileID: 0}
-  _TitanScript: {fileID: 0}
+  TitanObject: {fileID: 0}
+  TitanScript: {fileID: 0}
   _vanguardTitanPrefab:
     RawGuidValue: cf462d6715c994f4d848251fb0993fa2
 --- !u!114 &2221782363576981722
@@ -494,7 +494,7 @@ MonoBehaviour:
   AoiPositionSource: {fileID: 0}
   Flags: 2305
   NetworkGuid:
-    RawGuidValue: 20e910137b0efb044b61e1d535009af4
+    RawGuidValue: c4525ccd3779e8f439668aa3c25b3bd6
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 4186822761668775030}
@@ -539,7 +539,10 @@ MonoBehaviour:
   shouldSprint: 0
   isSprinting: 0
   shouldCrouch: 0
+  isCrouching: 0
+  shouldJump: 0
   isSliding: 0
+  isWallRunning: 0
   isGrounded: 0
   isMoving: 0
   embarking: 0
